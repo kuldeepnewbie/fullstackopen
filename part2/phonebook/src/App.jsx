@@ -2,13 +2,7 @@
 import { useState } from 'react';
 import Phonebook from './components/Phonebook';
 import PersonForm from './components/PersonForm';
-const Filter = ({text, value, handleNewChange}) => {
-  return(
-  <div>
-    {text} <input value={value} onChange={handleNewChange}/>
-  </div>
-  )
-}
+import Filter from './components/Filter'
 
 const App = () => {
   const [persons, setPersons] = useState([
