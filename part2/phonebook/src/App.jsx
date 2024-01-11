@@ -1,25 +1,21 @@
 /* eslint-disable react/prop-types */
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
 import Phonebook from './components/Phonebook';
 import PersonForm from './components/PersonForm';
-const Filter = ({text, value, handleNewChange}) => {
-  return(
-  <div>
-    {text} <input value={value} onChange={handleNewChange}/>
-  </div>
-  )
-}
+import Filter from './components/Filter';
+import phoneServices from './services/person';
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ])
+  const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('');
   const [newNumber, setNewNumber] = useState('');
   const [filterName,setFilterName] = useState('')
+
+  useEffect(() => {
+    phoneServices.getAll().then(result=>{
+      setPersons(result)
+    });
+  }, [])
 
   const addPhonebook = (event) => {
     event.preventDefault();
@@ -30,9 +26,14 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
       return
     }
-    setPersons([...persons, { name: newName,number:newNumber,id:persons.length+1 }]);
-    setNewName('');
+    let obj = { name: newName,number:newNumber,id:persons.length+1 }
+    phoneServices.create(obj).then(result=>{
+      setPersons(persons.concat(result.data))
+    })
+
+    setNewName('')
     setNewNumber('')
+
   }
 
   const handlePhonebookChange = (event)=>{
@@ -44,7 +45,6 @@ const App = () => {
   }
   const handleNewFilter = (event) => { setFilterName(event.target.value) } ;
 
-  console.log('Persons:', persons);
   return (
     <div>
       <h2>Phonebook</h2>
