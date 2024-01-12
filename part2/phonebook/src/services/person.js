@@ -12,7 +12,7 @@ const getAll = () => {
   
   const deleteItem = (id) => {
     const request = axios.delete(`${baseUrl}/${id}`)
-    return request.then(response => response.data)
+    return request.then(response => response.data).catch(err=>console.log(err))
   }
 
   const phoneServices = { getAll, create, deleteItem };

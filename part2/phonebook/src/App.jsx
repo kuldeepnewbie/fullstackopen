@@ -26,7 +26,7 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
       return
     }
-    let obj = { name: newName,number:newNumber,id:persons.length+1 }
+    let obj = { name: newName,number:newNumber,id:(persons.length+1).toString() }
     phoneServices.create(obj).then(result=>{
       setPersons(persons.concat(result.data))
     })
