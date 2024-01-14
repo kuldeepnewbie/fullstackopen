@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 const Notification = ({message}) =>{
-    if (message === null) {
+    if (message === '') {
         return null
       }
     
