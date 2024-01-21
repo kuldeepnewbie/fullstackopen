@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
+import Weather from './Weather';
 const View = (props) => {
     console.log(props,"sadjhjk")
     const languagesArray = Object.values(props.languages);
     const myStyle={
-        "display":"flex",
-        "flex-direction":"column"
+        display:"flex",
+        flexDirection:"column"
     }
     return (
         <div style={myStyle}>
@@ -16,6 +17,7 @@ const View = (props) => {
                 {languagesArray.map(ele=><li key={ele}>{ele}</li>)}
             </ul>
             <img src={props.flags.png} alt='flag' height='200' width='250' />
+            <Weather {...props} />
             <div><button onClick={props.clearData}>clear</button></div>
         </div>
     )
