@@ -7,8 +7,8 @@ const Result = (props) => {
   const [showData, setShowData] = useState(false);
   const [finalData, setFinalData] = useState([]);
   const mystyle = {
-    'display': "flex",
-    'align-items': "center"
+    display: "flex",
+    alignItems: "center"
   };
   const handleButtonClick = (ele) => {
     const index = filteredArray.findIndex(eles => eles.fifa == ele.fifa);
