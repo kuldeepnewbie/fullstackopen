@@ -54,12 +54,17 @@ const App = () => {
     event.preventDefault();
 
     const duplicate = persons.find((ele) => ele.name === newName);
-    const obj = { name: newName, number: newNumber, id: (persons.length + 1).toString() };
+    const obj = { name: newName, number: newNumber };
 
     try {
       if (duplicate) {
         if (window.confirm(`${newName} is already added to the phonebook, replace the old number with a new one?`)) {
-          await phoneServices.update(duplicate?.id, obj);
+          try{
+            await phoneServices.update(duplicate?.id, obj);
+          }catch(error){
+            setAlertChangeMessage(`${error}`);
+            return
+          }
           // Use map to create a new array with the updated person
           const updatedPersons = persons.map((ele) =>
             ele.name === duplicate.name ? { ...ele, number: obj.number } : ele
@@ -72,7 +77,12 @@ const App = () => {
           }, 5000);
         }
       } else {
-        await phoneServices.create(obj);
+        try{
+          await phoneServices.create(obj);
+        }catch (error){
+          setAlertChangeMessage(`${error}`);
+          return        
+        }
         // Fetch the updated data after creating a new entry
         const updatedData = await phoneServices.getAll();
         setPersons(updatedData);

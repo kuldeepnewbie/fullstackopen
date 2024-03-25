@@ -1,4 +1,6 @@
-import axios from 'axios'
+import axios from 'axios';
+import Notification from '../components/Notification'
+// const baseUrl = 'https://react-phonebook-z4df.onrender.com/api/phonebook';
 const baseUrl = 'http://localhost:3001/api/phonebook';
 
 const getAll = async () => {
@@ -6,7 +8,8 @@ const getAll = async () => {
       const response = await axios.get(baseUrl)
       return response.data
     }catch(error){
-      throw new Error(`Error Fetching data: ${error.message}`)
+      // alert(error.response.data.error)
+      throw new Error(`Error Fetching data: ${error.response.data.error}`)
     }
   }
   
@@ -15,7 +18,7 @@ const getAll = async () => {
       const response = await axios.post(baseUrl, newObject);
       return response.data;
     } catch (error) {
-      throw new Error(`Error creating data: ${error.message}`);
+      throw new Error(`Error creating data: ${error.response.data.error}`);
     }
   };
   
@@ -24,7 +27,8 @@ const getAll = async () => {
       const response = await axios.put(`${baseUrl}/${id}`, newObject);
       return response.data;
     } catch (error) {
-      throw new Error(`Error updating data: ${error.message}`);
+      console.log(error,"Asdasd")
+      throw new Error(`Error updating data: ${error.response.data.error}`);
     }
   };
   
@@ -33,7 +37,7 @@ const getAll = async () => {
       const response = await axios.delete(`${baseUrl}/${id}`);
       return response.data;
     } catch (error) {
-      throw new Error(`Error deleting data: ${error.message}`);
+      throw new Error(`Error deleting data: ${error.response.data.error}`);
     }
   };
 
