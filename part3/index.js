@@ -1,11 +1,15 @@
+/* eslint-disable no-unused-vars */
 require('dotenv').config()
 const express = require('express')
-const morgan = require('morgan')
 const app = express()
+const config = require('./utils/config')
+const logger = require('./utils/logger')
 const cors = require('cors')
 app.use(cors())
 app.use(express.json())
 const PhoneBook = require('./models/phonebook')
+const postMorgan = require('./utils/middleware')
+app.use(postMorgan)
 
 // let phonebook = [
 // 	{
@@ -29,7 +33,7 @@ const PhoneBook = require('./models/phonebook')
 // 		'number': '39-23-6423122'
 // 	}
 // ]
-morgan.token('body', (request) => JSON.stringify(request.body))
+// morgan.token('body', (request) => JSON.stringify(request.body))
 
 app.get('/info',(request,response, next) => {
 	const date = new Date()
@@ -76,7 +80,6 @@ app.delete('/api/phonebook/:id',(request,response,next) => {
 		response.status(204).end()
 	}).catch(error => next(error))
 })
-const postMorgan = morgan(':method :url :status :res[content-length] - :response-time ms :body')
 app.post('/api/phonebook',postMorgan,(request,response,next) => {
 	const body = request.body
 	if(!body || !body.name || !body.number){
