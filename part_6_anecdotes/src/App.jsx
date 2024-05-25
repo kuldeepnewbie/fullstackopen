@@ -1,7 +1,8 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { vote, createAnecdote } from './reducers/anecdoteReducer'
-
+import { vote, createAnecdote } from './store/anecdoteSlice'
+import Form from './components/Form'
 const App = () => {
+  //anecdotes should match the key used in store.js
   const anecdotes = useSelector(state => state.anecdotes)
   const dispatch = useDispatch()
   
@@ -35,11 +36,7 @@ const App = () => {
           </div>
         </div>
       )}
-      <h2>create new</h2>
-      <form onSubmit={addAnecdote}>
-        <div><input name="anecdote" /></div>
-        <button type="submit">create</button>
-      </form>
+      <Form addAnecdote={addAnecdote} />
     </div>
   )
 }
